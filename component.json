@@ -1,0 +1,17 @@
+{
+	"name": "fit-checker-chrome",
+	"version": "0.6.5",
+	"main": [
+		"./manifest.json",
+		"./popup.html",
+		"./settings.html",
+		"./js/commonApi.js",
+		"./js/chrome.js",
+		"./js/main.js"
+	],
+	"dependencies": {
+		"jquery": "1.9.*",
+		"common-assets": "git://github.com/FIT-Checker/common-assets.git",
+		"edux.api.js": "git://github.com/FIT-Checker/edux.api.js.git"
+	}
+}
