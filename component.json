@@ -4,8 +4,7 @@
 	"main": [
 		"./manifest.json",
 		"./popup.html",
-		"./settings.html",
-		"./js/commonApi.js",
+		"./js/ui.js",
 		"./js/chrome.js",
 		"./js/main.js"
 	],
