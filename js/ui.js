@@ -1,7 +1,33 @@
 var fitCheckerUi = {
 	inner: {
+		setEmpty: function(el) {
+			$(el).html('');
+		},
+		show: function(el) {
+			$(el).removeClass('invisible');
+		},
+		hide: function(el) {
+			$(el).addClass('invisible');
+		},
 		showMessage: function(message, className) {
-			console.log(className + ': ' + message);
+			var messageElement = $(document.createElement('li'));
+			messageElement.addClass(className);
+			messageElement.html(message);
+			var messages = $('.messages');
+			messages.append(messageElement);
+			messages.show();
+		},
+		getMessagesElement: function() {
+			return $('.messages');
+		},
+		getMenuElement: function() {
+			return $('.menu');
+		},
+		getLoaderElement: function() {
+			return $('.loader');
+		},
+		getUserInfoElement: function() {
+			return $('.user-info');
 		}
 	},
 	showErrorMessage: function(message) {
@@ -11,10 +37,12 @@ var fitCheckerUi = {
 		this.inner.showMessage(message, 'success');
 	},
 	removeAllMessages: function() {
-		console.log('Remove all messages');
+		var messages = this.inner.getMessagesElement();
+		messages.fadeOut();
+		this.inner.setEmpty(messages);
 	},
 	addCourseToMenu: function(courseName) {
-		var menu = $('.menu');
+		var menu = this.inner.getMenuElement();
         var item = $(document.createElement('a'));
         item.attr('href', '#');
         item.attr('id', courseName);
@@ -24,31 +52,37 @@ var fitCheckerUi = {
 	},
 	showCourseDetails: function(courseName) {
 		$('#' + courseName).addClass('active');
+		// TODO - show tab content
 	},
 	showMenu: function() {
-		$('.menu').removeClass('invisible');
+		this.inner.show(this.inner.getMenuElement());
 	},
 	hideMenu: function() {
-		console.log('Menu hidden.');
-	},
-	showLoader: function() {
-		console.log('Loader shown.');
-	},
-	hideLoader: function() {
-		console.log('Loader hidden.');
+		this.inner.hide(this.inner.getMenuElement());
 	},
 	clearMenu: function() {
-		var menu = $('.menu');
-		menu.addClass('invisible');
-		menu.html('');
+		this.hideMenu();
+		this.inner.setEmpty(this.inner.getMenuElement());
+	},
+	showLoader: function() {
+		this.inner.show(this.inner.getLoaderElement());
+	},
+	hideLoader: function() {
+		this.inner.hide(this.inner.getLoaderElement());
 	},
 	getContentElement: function() {
-		console.log('Content element returned.');
+		return $('.content');
 	},
 	showUsername: function(username) {
-		console.log('Username "' + username + '" shown.');
+		var userInfo = this.inner.getUserInfoElement();
+		userInfo.html(username);
+		this.inner.show(userInfo);
 	},
 	hideUsername: function() {
-		console.log('Username hidden.');
+		this.inner.hide(this.inner.getUserInfoElement());
+	},
+	clearUsername: function() {
+		this.hideUsername();
+		this.inner.setEmpty(this.inner.getUserInfoElement());
 	}
 };
