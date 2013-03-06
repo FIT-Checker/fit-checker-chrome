@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="components/common-assets/css/main.css">
-    <script type="text/javascript" src="components/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="components/edux.api.js/edux.api.js"></script>
-    <script type="text/javascript" src="js/chrome.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="components/common-assets/css/main.css">
+	<script type="text/javascript" src="components/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="components/edux.api.js/edux.api.js"></script>
+	<script type="text/javascript" src="js/chrome.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
 </head>
-<body class="popup">
-    <div id="user"></div>
-    <div id="status">Připravuji stažení...</div>
-    <div id="menu" style="display:none"></div>
-    <div id="content"></div>
+<body>
+	<header>
+		<h1>FIT Checker</h1>
+		<div class="user-info"></div>
+		<div class="loading">Loading...</div>
+	</header>
+	<ul class="messages"></ul>
+	<nav class="menu invisible"></nav>
+	<div class="content invisible"></div>
 </body>
 </html>

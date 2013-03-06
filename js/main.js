@@ -20,10 +20,30 @@ var application = {
 		fitChecker.showMessage(message, 'error');
 	},
 	showCoursesMenu: function(courses) {
+        application.clearMenu();
+        var parent = application;
 		$(courses).each(function (index, course) {
-			console.log(index + ' : ' + course);
+			parent.addCourseToMenu(course);
 		});
-	}
+        $('.menu').removeClass('invisible');
+	},
+    clearMenu: function() {
+        var menu = $('.menu');
+        menu.addClass('invisible');
+        menu.html('');
+    },
+    addCourseToMenu: function(course) {
+        var menu = $('.menu');
+        var item = $(document.createElement('a'));
+        item.attr('href', '#');
+        item.attr('id', course);
+        item.addClass('tab');
+        item.html(course);
+        menu.append(item);
+    },
+    activateTab: function(id) {
+        $('#' + id).addClass('active');
+    } 
 };
 
 // Fill prepared data into the extension DOM
@@ -233,16 +253,6 @@ function downloadData(detect) {
             // Get logged user
             username = $("div.user", xhr.responseText).text()
                 .replace(/.*\(([a-z0-9]*)\).*/, "$1");
-
-            var xhrM = new XMLHttpRequest();
-            xhrM.open("GET","/manifest.json", true);
-            xhrM.onreadystatechange = function() {
-                if (xhrM.readyState == 4) {
-                    var manifest = $.parseJSON(xhrM.responseText);
-                    _gaq.push(['_trackEvent', username, 'chrome-v' + manifest.version]);
-                }
-            };
-            xhrM.send();
 
             $("div#user").hide();
             $("div#user").text(username);
