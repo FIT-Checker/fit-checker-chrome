@@ -1,7 +1,8 @@
 {
 	"name": "FIT Checker",
 	"version": "0.6.5",
-	"description": "Extension pro studenty FIT ČVUT, pro kontrolu aktuálního stavu hodnocení v předmětech",
+	"manifest_version": 2,
+	"description": "Rozšíření pro studenty FIT ČVUT. Slouží ke kontrole aktuálního stavu hodnocení v předmětech na serveru edux.fit.cvut.cz.",
 	"icons": {
 		"16": "components/common-assets/img/icon-16.png",
 		"48": "components/common-assets/img/icon-48.png",
@@ -12,7 +13,6 @@
 		"default_title": "FIT Checker",
 		"default_popup": "popup.html"
 	},
-	"options_page": "settings.html",
 	"permissions": [
 		"tabs",
 		"https://edux.fit.cvut.cz/*"
