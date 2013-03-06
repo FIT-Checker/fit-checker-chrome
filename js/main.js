@@ -5,45 +5,21 @@ var subjectContents = [];
 
 var application = {
 	inner: {
-		// Browser class instance variable
-		browser: null,
-		username: ''
+		username: '',
+		loadSubjects: function() {
+			fitChecker.getSubjectsFromEdux(function(courses) {
+				fitCheckerUi.clearMenu();
+				$(courses).each(function (index, course) {
+					fitCheckerUi.addCourseToMenu(course);
+				});
+				fitCheckerUi.showMenu();
+			}, fitCheckerUi.showErrorMessage);
+		}
 	},
 	run: function() {
-		this.inner.browser = browserChrome();
-		this.loadSubjects();
-	},
-	loadSubjects: function() {
-		fitChecker.getSubjectsFromEdux(this.showCoursesMenu, this.showErrorMessage);
-	},
-	showErrorMessage: function(message) {
-		fitChecker.showMessage(message, 'error');
-	},
-	showCoursesMenu: function(courses) {
-        application.clearMenu();
-        var parent = application;
-		$(courses).each(function (index, course) {
-			parent.addCourseToMenu(course);
-		});
-        $('.menu').removeClass('invisible');
-	},
-    clearMenu: function() {
-        var menu = $('.menu');
-        menu.addClass('invisible');
-        menu.html('');
-    },
-    addCourseToMenu: function(course) {
-        var menu = $('.menu');
-        var item = $(document.createElement('a'));
-        item.attr('href', '#');
-        item.attr('id', course);
-        item.addClass('tab');
-        item.html(course);
-        menu.append(item);
-    },
-    activateTab: function(id) {
-        $('#' + id).addClass('active');
-    } 
+		browserChrome.init();
+		this.inner.loadSubjects();
+	}
 };
 
 // Fill prepared data into the extension DOM
