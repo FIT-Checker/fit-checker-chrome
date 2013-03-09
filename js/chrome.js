@@ -19,7 +19,7 @@ var browserChrome = {
 	},
 	makeLinksClickable: function() {
 		var parent = this;
-		$("a").off('click').on('click', function() {
+		$("a.link").off('click').on('click', function() {
 			var link = $(this);
 			parent.openUrl(link.attr('href'));
 		});
