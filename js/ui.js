@@ -28,6 +28,18 @@ var fitCheckerUi = {
 		},
 		getUserInfoElement: function() {
 			return $('.user-info');
+		},
+		getContentElement: function() {
+			return $('.content');
+		},
+		activateCourse: function(id) {
+			this.deactivateAllCourses();
+			$('#' + id).addClass('active');
+		},
+		deactivateAllCourses: function() {
+			this.getMenuElement().find('a.tab').each(function(index, el) {
+				$(el).removeClass('active');
+			});
 		}
 	},
 	showErrorMessage: function(message) {
@@ -41,18 +53,25 @@ var fitCheckerUi = {
 		messages.fadeOut();
 		this.inner.setEmpty(messages);
 	},
-	addCourseToMenu: function(courseName) {
+	addCourseToMenu: function(courseName, loaderCallback) {
 		var menu = this.inner.getMenuElement();
         var item = $(document.createElement('a'));
         item.attr('href', '#');
         item.attr('id', courseName);
         item.addClass('tab');
         item.html(courseName);
+        item.click(function (e) {
+			loaderCallback($(this).attr('id'));
+        });
         menu.append(item);
 	},
-	showCourseDetails: function(courseName) {
-		$('#' + courseName).addClass('active');
-		// TODO - show tab content
+	showCourseDetails: function(courseName, courseContent) {
+		var content = this.inner.getContentElement();
+		this.inner.hide(content);
+		content.html(courseContent);
+		this.inner.activateCourse(courseName);
+		this.inner.show(content);
+		this.hideLoader();
 	},
 	showMenu: function() {
 		this.inner.show(this.inner.getMenuElement());
@@ -69,9 +88,6 @@ var fitCheckerUi = {
 	},
 	hideLoader: function() {
 		this.inner.hide(this.inner.getLoaderElement());
-	},
-	getContentElement: function() {
-		return $('.content');
 	},
 	showUsername: function(username) {
 		var userInfo = this.inner.getUserInfoElement();
