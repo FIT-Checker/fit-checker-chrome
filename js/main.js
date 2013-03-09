@@ -5,19 +5,47 @@ var subjectContents = [];
 
 var application = {
 	inner: {
-		username: '',
+		messages: {
+			'notConnected': 'Nejste připojeni k internetu.',
+			'notLoggedIn': 'Nejste přihlášen/a na <a href="https://edux.fit.cvut.cz/start?do=login" class="link">Eduxu</a>',
+			'subjectsNotLoaded': 'Nepodařilo se načíst seznam předmětů.',
+			'noSubjectFound': 'Nebyl nalezen žádný předmět.'
+		},
 		loadSubjects: function() {
 			fitChecker.getSubjectsFromEdux(function(courses) {
 				fitCheckerUi.clearMenu();
 				$(courses).each(function (index, course) {
-					fitCheckerUi.addCourseToMenu(course);
+					fitCheckerUi.addCourseToMenu(course, function(courseName) {
+						fitCheckerUi.showCourseDetails(courseName, courseName);
+					});
 				});
 				fitCheckerUi.showMenu();
+				if (courses.length > 0) {
+					var firstCourseName = courses[0];
+					fitCheckerUi.showCourseDetails(firstCourseName, firstCourseName);
+				}
 			}, fitCheckerUi.showErrorMessage);
-		}
+		},
+        loadUsername: function() {
+            fitChecker.getUsernameFromEdux(function(response) {
+				var dom = $(document.createElement('div'));
+				dom.html(response);
+				if (dom.find('input[value="Přihlásit se"]').length > 0) {
+					fitCheckerUi.showErrorMessage(this.messages.notLoggedIn);
+					browserChrome.makeLinksClickable();
+					return false;
+				}
+				var username = dom.find("div.user").text().replace(/.*\(([a-z0-9]*)\).*/, "$1");
+				fitCheckerUi.showUsername(username);
+            }, function(status) {
+                fitCheckerUi.showErrorMessage(status);
+                fitCheckerUi.clearUsername();
+            });
+        }
 	},
 	run: function() {
 		browserChrome.init();
+		this.inner.loadUsername();
 		this.inner.loadSubjects();
 	}
 };
